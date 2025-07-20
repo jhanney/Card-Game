@@ -49,7 +49,6 @@ public class MatchCards {
     MatchCards(){
         setupCards(); 
         shuffleCards(); 
-
     }
 
 
@@ -66,7 +65,11 @@ public class MatchCards {
         }
         cardSet.addAll(cardSet); //adds 10 more cards
 
-        Image cardBImage = new ImageIcon(getClass().getResource("./imageback.jpg")).getImage();
+        Image cardBImage = new ImageIcon(getClass().getResource("./image/back.jpg")).getImage();
         cardBackImageIcon = new ImageIcon(cardBImage.getScaledInstance(cardWith, cardHeight, java.awt.Image.SCALE_SMOOTH)); 
+    }
+
+    private void shuffleCards(){
+        System.out.println(cardSet);
     }
 }
