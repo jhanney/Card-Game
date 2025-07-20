@@ -56,20 +56,32 @@ public class MatchCards {
         cardSet = new ArrayList<>();
         for(String cardName: cardList){
             //load our card images
-            Image cardImg = new ImageIcon(getClass().getResource("./img/" + cardName + ".jpg")).getImage();
+            Image cardImg = new ImageIcon(getClass().getResource("/img/" + cardName + ".jpg")).getImage();
             //scaling our image
             ImageIcon cardImageIcon = new ImageIcon(cardImg.getScaledInstance(cardWith, cardHeight, java.awt.Image.SCALE_SMOOTH)); 
 
-            Card card = new Card(null, cardImageIcon); //card ogbject to add to set
+            Card card = new Card(cardName, cardImageIcon); //card ogbject to add to set
             cardSet.add(card);//this adds the 10 cards
         }
         cardSet.addAll(cardSet); //adds 10 more cards
 
-        Image cardBImage = new ImageIcon(getClass().getResource("./image/back.jpg")).getImage();
+        Image cardBImage = new ImageIcon(getClass().getResource("/img/back.jpg")).getImage();
         cardBackImageIcon = new ImageIcon(cardBImage.getScaledInstance(cardWith, cardHeight, java.awt.Image.SCALE_SMOOTH)); 
     }
 
+
     private void shuffleCards(){
+        System.out.println(cardSet);
+
+        //shuffle the cards
+        for(int i = 0; i < cardSet.size(); i++){
+            int j = (int) Math.random() * cardSet.size(); //get random index of a card
+
+            //swap the cards
+            Card temp = cardSet.get(i); //assign the temp i
+            cardSet.set(i, cardSet.get(j)); //set i as the card at j (random index)
+            cardSet.set(j, temp); //assign the card at j the temp (originally i)
+        }
         System.out.println(cardSet);
     }
 }
