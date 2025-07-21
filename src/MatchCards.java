@@ -45,10 +45,22 @@ public class MatchCards {
     ArrayList<Card> cardSet; //deck of cards with cardNames and image icons
     ImageIcon cardBackImageIcon; //back of card
 
-      
+    int boardWidth = cols *cardWith; //640px
+    int boardHeight = rows * cardHeight; //360px
+
+    JFrame frame = new JFrame("Match Cards");
+
+
     MatchCards(){
         setupCards(); 
         shuffleCards(); 
+
+
+        frame.setVisible(true);
+        frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);//cannot change size
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
@@ -75,7 +87,7 @@ public class MatchCards {
 
         //shuffle the cards
         for(int i = 0; i < cardSet.size(); i++){
-            int j = (int) Math.random() * cardSet.size(); //get random index of a card
+            int j = (int) (Math.random() * cardSet.size()); //get random index of a card
 
             //swap the cards
             Card temp = cardSet.get(i); //assign the temp i
