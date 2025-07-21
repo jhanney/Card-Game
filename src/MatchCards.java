@@ -52,6 +52,8 @@ public class MatchCards {
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel(); //add the board
+    JPanel restartGamePanel = new JPanel(); 
+    JButton restartGame = new JButton(); //restart button
 
     int errorCount = 0; 
     ArrayList<JButton> board; //arraylist to hold buttons
@@ -89,6 +91,14 @@ public class MatchCards {
             boardPanel.add(tile); //adds button to panel 
         }
         frame.add(boardPanel); 
+
+        //restart button
+        restartGame.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        restartGame.setText("Restart Game");
+        restartGame.setPreferredSize(new Dimension(boardWidth, 30));
+        restartGame.setFocusable(false);
+        restartGamePanel.add(restartGame);
+        frame.add(restartGamePanel, BorderLayout.SOUTH); //add to frame and place under board
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
