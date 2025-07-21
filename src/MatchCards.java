@@ -49,18 +49,49 @@ public class MatchCards {
     int boardHeight = rows * cardHeight; //360px
 
     JFrame frame = new JFrame("Match Cards");
+    JLabel textLabel = new JLabel();
+    JPanel textPanel = new JPanel();
+    JPanel boardPanel = new JPanel(); //add the board
 
+    int errorCount = 0; 
+    ArrayList<JButton> board; //arraylist to hold buttons
 
     MatchCards(){
         setupCards(); 
         shuffleCards(); 
 
 
-        frame.setVisible(true);
+        //frame.setVisible(true);
+        frame.setLayout(new BorderLayout());
         frame.setSize(boardWidth, boardHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);//cannot change size
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        textLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        textLabel.setHorizontalAlignment(JLabel.CENTER);
+        textLabel.setText("Errors: " + Integer.toString(errorCount));
+
+        textPanel.setPreferredSize(new Dimension(boardWidth, 30));
+        textPanel.add(textLabel); 
+        frame.add(textPanel, BorderLayout.NORTH); 
+
+        //game board
+        board = new ArrayList<JButton>();
+        boardPanel.setLayout(new GridLayout(rows, cols));
+        for(int i = 0; i < cardSet.size(); i++){
+            JButton tile = new JButton();
+            tile.setPreferredSize(new Dimension(cardWith, cardHeight));//each button is card witdh and height
+            tile.setOpaque(true);
+            tile.setIcon(cardSet.get(i).cardImageIcon);
+            tile.setFocusable(false);
+            board.add(tile); //add to array list
+            boardPanel.add(tile); //adds button to panel 
+        }
+        frame.add(boardPanel); 
+
+        frame.pack();//recalculates width and height after components added
+        frame.setVisible(true);
     }
 
 
