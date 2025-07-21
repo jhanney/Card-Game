@@ -59,6 +59,8 @@ public class MatchCards {
     ArrayList<JButton> board; //arraylist to hold buttons
     Timer hideCards; //timer for showing cards
     boolean gameReady = false; 
+    JButton card1;
+    JButton card2;
 
 
     MatchCards(){
@@ -90,6 +92,26 @@ public class MatchCards {
             tile.setOpaque(true);
             tile.setIcon(cardSet.get(i).cardImageIcon);
             tile.setFocusable(false);
+            tile.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    if(!gameReady){
+                        return;
+                    }
+                    JButton	tile = (JButton) e.getSource(); //returns the button we click
+                    if(tile.getIcon() == cardBackImageIcon){
+                        if(card1 == null){
+                            card1 = tile; 
+                            int index = board.indexOf(card1);//assign index to that of selected card
+                            card1.setIcon(cardSet.get(index).cardImageIcon);//set the image to the card
+                        }else if(card2 == null){
+                            card2 = tile;
+                            int index = board.indexOf(card2);
+                            card2.setIcon(cardSet.get(index).cardImageIcon);
+                        }
+                    }
+                }
+            });
             board.add(tile); //add to array list
             boardPanel.add(tile); //adds button to panel 
         }
