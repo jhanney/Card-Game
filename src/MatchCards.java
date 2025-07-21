@@ -57,6 +57,9 @@ public class MatchCards {
 
     int errorCount = 0; 
     ArrayList<JButton> board; //arraylist to hold buttons
+    Timer hideCards; //timer for showing cards
+    boolean gameReady = false; 
+
 
     MatchCards(){
         setupCards(); 
@@ -102,6 +105,16 @@ public class MatchCards {
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
+
+        //start game
+        hideCards = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                hideCards(); 
+            }
+        });
+        hideCards.setRepeats(false); //only calls hide cards once
+        hideCards.start();
     }
 
 
@@ -136,5 +149,13 @@ public class MatchCards {
             cardSet.set(j, temp); //assign the card at j the temp (originally i)
         }
         System.out.println(cardSet);
+    }
+
+    private void hideCards() {
+        //loop through all buttons and change image to back 
+        for(int i = 0; i < cardSet.size(); i++){
+            board.get(i).setIcon(cardBackImageIcon);
+        }
+        gameReady = true; 
     }
 }
