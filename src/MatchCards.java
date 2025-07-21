@@ -108,6 +108,16 @@ public class MatchCards {
                             card2 = tile;
                             int index = board.indexOf(card2);
                             card2.setIcon(cardSet.get(index).cardImageIcon);
+
+                            if(card1.getIcon() != card2.getIcon()){
+                                errorCount ++;
+                                textLabel.setText("Errors: " + Integer.toString(errorCount));
+                                hideCards.start (); //flip cards back 
+                            }
+                            else{
+                                card1 = null; //leaves both faced up as we dont chage images
+                                card2 = null; 
+                            }                           
                         }
                     }
                 }
@@ -174,10 +184,19 @@ public class MatchCards {
     }
 
     private void hideCards() {
-        //loop through all buttons and change image to back 
-        for(int i = 0; i < cardSet.size(); i++){
-            board.get(i).setIcon(cardBackImageIcon);
+        //check if game is ready and 2 cards selected
+        if(gameReady && card1 != null && card2 != null){
+            card1.setIcon(cardBackImageIcon);//set image to back of card
+            card1 = null; //assign back to null
+            card2.setIcon(cardBackImageIcon);
+            card2 = null; 
         }
-        gameReady = true; 
+        else {
+            //loop through all buttons and change image to back 
+            for(int i = 0; i < cardSet.size(); i++){
+                board.get(i).setIcon(cardBackImageIcon);
+            }
+            gameReady = true; 
+        }
     }
 }
