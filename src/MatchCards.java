@@ -132,6 +132,29 @@ public class MatchCards {
         restartGame.setText("Restart Game");
         restartGame.setPreferredSize(new Dimension(boardWidth, 30));
         restartGame.setFocusable(false);
+        restartGame.setEnabled(false);
+        restartGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(!gameReady){
+                    return; 
+                }
+                gameReady = false; 
+                restartGame.setEnabled(false);
+                card1 = null;
+                card2 = null;
+                shuffleCards();
+
+                //re assigns all the buttons with new cards
+                for(int i = 0; i < cardSet.size(); i++){
+                    board.get(i).setIcon(cardSet.get(i).cardImageIcon);
+                }
+
+                errorCount = 0;
+                textLabel.setText("Errors: " + Integer.toString(errorCount));
+                hideCards.start(); 
+            }
+        });
         restartGamePanel.add(restartGame);
         frame.add(restartGamePanel, BorderLayout.SOUTH); //add to frame and place under board
 
@@ -197,6 +220,7 @@ public class MatchCards {
                 board.get(i).setIcon(cardBackImageIcon);
             }
             gameReady = true; 
+            restartGame.setEnabled(true);
         }
     }
 }
