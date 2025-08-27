@@ -56,6 +56,7 @@ public class MatchCards {
     JButton restartGame = new JButton(); //restart button
 
     int errorCount = 0; 
+    int pairComplete = 0; 
     ArrayList<JButton> board; //arraylist to hold buttons
     Timer hideCards; //timer for showing cards
     boolean gameReady = false; 
@@ -117,6 +118,11 @@ public class MatchCards {
                             else{
                                 card1 = null; //leaves both faced up as we dont chage images
                                 card2 = null; 
+                                pairComplete ++; 
+                                int totalPairs = board.size() / 2; 
+                                if(pairComplete == totalPairs){
+                                    textLabel.setText("You have completed the game!!");
+                                }
                             }                           
                         }
                     }
