@@ -146,9 +146,8 @@ public class MatchCards {
                             if(card1.getIcon() != card2.getIcon()){
                                 errorCount ++;
                                 textLabel.setText("Errors: " + Integer.toString(errorCount));
-                                gameReady = false;                 // lock input during preview
                                 hideCards.stop();
-                                hideCards.setInitialDelay(delay); //use difficulty 
+                                hideCards.setInitialDelay(1500); //use difficulty 
                                 hideCards.start (); //flip cards back 
                             }
                             else{
@@ -194,7 +193,7 @@ public class MatchCards {
 
                 errorCount = 0;
                 textLabel.setText("Errors: " + Integer.toString(errorCount));
-                gameReady = false;                 // lock input during preview
+                //gameReady = false;                 // lock input during preview
                 hideCards.stop();
                 hideCards.setInitialDelay(delay);
                 hideCards.start(); 
@@ -210,7 +209,7 @@ public class MatchCards {
         //start game
         hideCards = new Timer(0, e -> hideCards());
         hideCards.setRepeats(false); //only calls hide cards once
-        gameReady = false;                 // lock input during preview
+        //gameReady = false;                 // lock input during preview
         hideCards.stop();
         hideCards.setInitialDelay(delay);  // use difficulty
         hideCards.start();
@@ -264,9 +263,9 @@ public class MatchCards {
             for(int i = 0; i < cardSet.size(); i++){
                 board.get(i).setIcon(cardBackImageIcon);
             }
-            //gameReady = true; 
+            gameReady = true; 
             restartGame.setEnabled(true);
         }
-        gameReady = true; 
+        //gameReady = true; 
     }
 }
