@@ -63,7 +63,7 @@ public class MatchCards {
     JPanel restartGamePanel = new JPanel(); 
     JButton restartGame = new JButton(); //restart button
 
-    int delay; 
+    int delay = 1500; 
 
     int errorCount = 0; 
     int pairComplete = 0; 
@@ -101,7 +101,7 @@ public class MatchCards {
             public void actionPerformed(ActionEvent e){
                 String selected = (String) difficultyBox.getSelectedItem(); 
                 if(selected.equals("Easy")){
-                    delay = 2000; 
+                    delay = 5000; 
                 }else if(selected.equals("Medium")){
                     delay = 1500; 
                 }else if(selected.equals("Hard")){
@@ -117,7 +117,7 @@ public class MatchCards {
 
         frame.add(textPanel, BorderLayout.NORTH);
 
-        //game board
+        //game board 
         board = new ArrayList<JButton>();
         boardPanel.setLayout(new GridLayout(rows, cols));
         for(int i = 0; i < cardSet.size(); i++){
@@ -146,6 +146,9 @@ public class MatchCards {
                             if(card1.getIcon() != card2.getIcon()){
                                 errorCount ++;
                                 textLabel.setText("Errors: " + Integer.toString(errorCount));
+                                gameReady = false;                 // lock input during preview
+                                hideCards.stop();
+                                hideCards.setInitialDelay(delay); //use difficulty 
                                 hideCards.start (); //flip cards back 
                             }
                             else{
@@ -191,26 +194,27 @@ public class MatchCards {
 
                 errorCount = 0;
                 textLabel.setText("Errors: " + Integer.toString(errorCount));
+                gameReady = false;                 // lock input during preview
+                hideCards.stop();
+                hideCards.setInitialDelay(delay);
                 hideCards.start(); 
             }
         });
         restartGamePanel.add(restartGame);
         frame.add(restartGamePanel, BorderLayout.SOUTH); //add to frame and place under board
-        //topP.add(gameDifficulty, BorderLayout.NORTH);
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
 
 
         //start game
-        hideCards = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                hideCards(); 
-            }
-        });
+        hideCards = new Timer(0, e -> hideCards());
         hideCards.setRepeats(false); //only calls hide cards once
+        gameReady = false;                 // lock input during preview
+        hideCards.stop();
+        hideCards.setInitialDelay(delay);  // use difficulty
         hideCards.start();
+        
     }
 
 
@@ -260,8 +264,9 @@ public class MatchCards {
             for(int i = 0; i < cardSet.size(); i++){
                 board.get(i).setIcon(cardBackImageIcon);
             }
-            gameReady = true; 
+            //gameReady = true; 
             restartGame.setEnabled(true);
         }
+        gameReady = true; 
     }
 }
