@@ -36,6 +36,13 @@ public class MatchCards {
         "water"
     };
 
+    //difficulties
+    String[] difficulties = {
+        "Easy",
+        "Medium",
+        "Hard"
+    };
+
     int rows = 4;
     int cols = 5; 
     int cardWith = 90;
@@ -50,10 +57,13 @@ public class MatchCards {
 
     JFrame frame = new JFrame("Match Cards");
     JLabel textLabel = new JLabel();
-    JPanel textPanel = new JPanel();
+    JPanel textPanel = new JPanel(); 
     JPanel boardPanel = new JPanel(); //add the board
+     
     JPanel restartGamePanel = new JPanel(); 
     JButton restartGame = new JButton(); //restart button
+
+    int delay; 
 
     int errorCount = 0; 
     int pairComplete = 0; 
@@ -81,8 +91,31 @@ public class MatchCards {
         textLabel.setText("Errors: " + Integer.toString(errorCount));
 
         textPanel.setPreferredSize(new Dimension(boardWidth, 30));
-        textPanel.add(textLabel); 
-        frame.add(textPanel, BorderLayout.NORTH); 
+        textPanel.add(textLabel, BorderLayout.NORTH); 
+         
+        JPanel gameDifficulty = new JPanel();
+        JComboBox<String> difficultyBox = new JComboBox<>(difficulties); 
+        difficultyBox.setSelectedItem("Medium");
+        difficultyBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String selected = (String) difficultyBox.getSelectedItem(); 
+                if(selected.equals("Easy")){
+                    delay = 2000; 
+                }else if(selected.equals("Medium")){
+                    delay = 1500; 
+                }else if(selected.equals("Hard")){
+                    delay = 1250; 
+                }
+            }
+        });
+
+        gameDifficulty.add(new JLabel("Difficulty")); 
+        gameDifficulty.add(difficultyBox); 
+        textPanel.add(gameDifficulty, BorderLayout.NORTH); 
+
+
+        frame.add(textPanel, BorderLayout.NORTH);
 
         //game board
         board = new ArrayList<JButton>();
@@ -163,12 +196,14 @@ public class MatchCards {
         });
         restartGamePanel.add(restartGame);
         frame.add(restartGamePanel, BorderLayout.SOUTH); //add to frame and place under board
+        //topP.add(gameDifficulty, BorderLayout.NORTH);
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
 
+
         //start game
-        hideCards = new Timer(1500, new ActionListener() {
+        hideCards = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 hideCards(); 
