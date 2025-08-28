@@ -63,6 +63,9 @@ public class MatchCards {
     JPanel restartGamePanel = new JPanel(); 
     JButton restartGame = new JButton(); //restart button
 
+    JPanel startGamePanel = new JPanel(); // start game button 
+    JButton startGame = new JButton(); 
+
     int delay = 1500; 
 
     int errorCount = 0; 
@@ -77,6 +80,12 @@ public class MatchCards {
     MatchCards(){
         setupCards(); 
         shuffleCards(); 
+
+        /*Make a start game button
+         * only allowed to start after difficulty is selected
+         * also try to fix the placement of select difficulty, maybe make a new jPanel
+         */
+
 
 
         //frame.setVisible(true);
@@ -147,7 +156,7 @@ public class MatchCards {
                                 errorCount ++;
                                 textLabel.setText("Errors: " + Integer.toString(errorCount));
                                 hideCards.stop();
-                                hideCards.setInitialDelay(1500); //use difficulty 
+                                hideCards.setInitialDelay(1500); //use medium delay 
                                 hideCards.start (); //flip cards back 
                             }
                             else{
@@ -171,7 +180,7 @@ public class MatchCards {
         //restart button
         restartGame.setFont(new Font("Arial", Font.PLAIN, 16)); 
         restartGame.setText("Restart Game");
-        restartGame.setPreferredSize(new Dimension(boardWidth, 30));
+        restartGame.setPreferredSize(new Dimension(boardWidth/2, 30));
         restartGame.setFocusable(false);
         restartGame.setEnabled(false);
         restartGame.addActionListener(new ActionListener() {
@@ -199,11 +208,22 @@ public class MatchCards {
                 hideCards.start(); 
             }
         });
+
+
+        startGame.setFont(new Font("Arial", Font.PLAIN, 16)); 
+        startGame.setText("Start Game");
+        startGame.setPreferredSize(new Dimension(boardWidth/2, 30));
+        startGame.setFocusable(false);
+        startGame.setEnabled(false);
+
+        restartGamePanel.add(startGame); 
         restartGamePanel.add(restartGame);
         frame.add(restartGamePanel, BorderLayout.SOUTH); //add to frame and place under board
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
+
+        //start game 
 
 
         //start game
@@ -266,6 +286,5 @@ public class MatchCards {
             gameReady = true; 
             restartGame.setEnabled(true);
         }
-        //gameReady = true; 
     }
 }
