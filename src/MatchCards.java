@@ -191,6 +191,7 @@ public class MatchCards {
                 }
                 gameReady = false; 
                 restartGame.setEnabled(false);
+                startGame.setEnabled(false);
                 card1 = null;
                 card2 = null;
                 shuffleCards();
@@ -206,6 +207,7 @@ public class MatchCards {
                 hideCards.stop();
                 hideCards.setInitialDelay(delay);
                 hideCards.start(); 
+                startGame.setEnabled(true);
             }
         });
 
@@ -214,7 +216,16 @@ public class MatchCards {
         startGame.setText("Start Game");
         startGame.setPreferredSize(new Dimension(boardWidth/2, 30));
         startGame.setFocusable(false);
-        startGame.setEnabled(false);
+        startGame.setEnabled(true);
+        startGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                gameReady = true; 
+                startGame.setEnabled(false);
+                restartGame.setEnabled(true);
+                //hideCards.start();
+            }
+        });
 
         restartGamePanel.add(startGame); 
         restartGamePanel.add(restartGame);
@@ -222,8 +233,6 @@ public class MatchCards {
 
         frame.pack();//recalculates width and height after components added
         frame.setVisible(true);
-
-        //start game 
 
 
         //start game
@@ -245,7 +254,7 @@ public class MatchCards {
             //scaling our image
             ImageIcon cardImageIcon = new ImageIcon(cardImg.getScaledInstance(cardWith, cardHeight, java.awt.Image.SCALE_SMOOTH)); 
 
-            Card card = new Card(cardName, cardImageIcon); //card ogbject to add to set
+            Card card = new Card(cardName, cardImageIcon); //card object to add to set
             cardSet.add(card);//this adds the 10 cards
         }
         cardSet.addAll(cardSet); //adds 10 more cards
@@ -283,8 +292,9 @@ public class MatchCards {
             for(int i = 0; i < cardSet.size(); i++){
                 board.get(i).setIcon(cardBackImageIcon);
             }
-            gameReady = true; 
+            gameReady = false; //changed from true
             restartGame.setEnabled(true);
         }
     }
+
 }
