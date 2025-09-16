@@ -5,23 +5,7 @@ import javax.swing.*;
 
 public class MatchCards {
 
-    //card class
-    class Card{
-        String cardName; 
-        ImageIcon cardImageIcon; //each image will be clickable icon
-
-        //constructor
-        Card(String cardName, ImageIcon cardImageIcon){
-            this.cardName = cardName;
-            this.cardImageIcon = cardImageIcon; 
-        }
-
-        //toString operator to print out class
-        public String toString(){
-            return cardName; //this will return the card object
-        }
-
-    }
+    
 
     String[] cardList = { //array of the card names
         "darkness",
@@ -133,7 +117,7 @@ public class MatchCards {
             JButton tile = new JButton();
             tile.setPreferredSize(new Dimension(cardWith, cardHeight));//each button is card witdh and height
             tile.setOpaque(true);
-            tile.setIcon(cardSet.get(i).cardImageIcon);
+            tile.setIcon(cardSet.get(i).getIcon());
             tile.setFocusable(false);
             tile.addActionListener(new ActionListener() {
                 @Override
@@ -146,11 +130,11 @@ public class MatchCards {
                         if(card1 == null){
                             card1 = tile; 
                             int index = board.indexOf(card1);//assign index to that of selected card
-                            card1.setIcon(cardSet.get(index).cardImageIcon);//set the image to the card
+                            card1.setIcon(cardSet.get(index).getIcon());//set the image to the card
                         }else if(card2 == null){
                             card2 = tile;
                             int index = board.indexOf(card2);
-                            card2.setIcon(cardSet.get(index).cardImageIcon);
+                            card2.setIcon(cardSet.get(index).getIcon());
 
                             if(card1.getIcon() != card2.getIcon()){
                                 errorCount ++;
@@ -198,7 +182,7 @@ public class MatchCards {
 
                 //re assigns all the buttons with new cards
                 for(int i = 0; i < cardSet.size(); i++){
-                    board.get(i).setIcon(cardSet.get(i).cardImageIcon);
+                    board.get(i).setIcon(cardSet.get(i).getIcon());
                 }
 
                 errorCount = 0;
